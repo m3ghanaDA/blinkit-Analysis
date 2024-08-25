@@ -3,7 +3,7 @@ The aim is to conduct a comprehensive analysis of blinkit's sales performance, c
 
 ## Dashboard Preview
 
-![Dashboard Preview](blinkit analysis.png)
+![Dashboard Preview](blinkitanalysis.png)
 
 - Developed Comprehensive Sales Dashboard: Designed and implemented a dynamic Power BI dashboard for blinkit,
 providing real-time insights into total sales, average sales, and item performance across various outlets and categories.
