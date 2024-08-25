@@ -1,6 +1,10 @@
 # blinkit-Analysis
 The aim is to conduct a comprehensive analysis of blinkit's sales performance, customer satisfaction, and inventory distribution to identify key insights and opportunities for optimization using various KPI's and visualizations in Power BI.
 
+## Dashboard Preview
+
+![Dashboard Preview](blinkit analysis.png)
+
 - Developed Comprehensive Sales Dashboard: Designed and implemented a dynamic Power BI dashboard for blinkit,
 providing real-time insights into total sales, average sales, and item performance across various outlets and categories.
 
