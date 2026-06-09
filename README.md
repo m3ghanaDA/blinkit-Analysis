@@ -82,27 +82,6 @@ Users can dynamically filter data by:
 
 ---
 
-## 📂 Project Structure
-
-```text
-Blinkit-Sales-Analysis/
-│
-├── Dataset/
-│   └── BlinkIT_Grocery_Data.xlsx
-│
-├── Dashboard/
-│   └── Blinkit_Dashboard.pbix
-│
-├── Images/
-│   ├── Dashboard_Overview.png
-│   ├── Sales_Analysis.png
-│   └── Outlet_Analysis.png
-│
-└── README.md
-```
-
----
-
 ## 🔄 Data Processing Workflow
 
 1. Data Collection
@@ -154,10 +133,6 @@ Average Rating = AVERAGE(Blinkit[Rating])
 ## 🚀 How to Run
 
 1. Download the repository
-
-```bash
-git clone https://github.com/yourusername/blinkit-sales-analysis.git
-```
 
 2. Open the `.pbix` file using Power BI Desktop.
 
