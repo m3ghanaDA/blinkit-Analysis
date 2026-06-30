@@ -1,0 +1,8 @@
+SALES = "Sales"
+RATING = "Rating"
+FAT = "Item Fat Content"
+ITEM = "Item Type"
+OUTLET = "Outlet Type"
+LOCATION = "Outlet Location Type"
+SIZE = "Outlet Size"
+YEAR = "Outlet Establishment Year"
