@@ -1,29 +1,49 @@
 import streamlit as st
-
 from utils.data_loader import load_data
+from utils.sidebar import sidebar_filters
+from utils.kpi import show_kpis
 from utils.preprocessing import preprocess_data
+from utils.charts import *
 
 st.set_page_config(
-    page_title="BlinkIt Analytics",
+    page_title="BlinkIT Analytics Dashboard",
+    page_icon="🛒",
     layout="wide"
 )
 
-st.title("🛒 BlinkIt Analytics Dashboard")
+st.title("🛒 BlinkIT Analytics Dashboard")
 
 df = load_data()
 df = preprocess_data(df)
 
-st.write(df.head())
+filtered_df = sidebar_filters(df)
 
+show_kpis(filtered_df)
 
-st.subheader("Dataset Information")
+st.divider()
 
-col1, col2, col3 = st.columns(3)
+#st.dataframe(filtered_df)
 
-col1.metric("Rows", len(df))
-col2.metric("Columns", len(df.columns))
-col3.metric("Duplicates", df.duplicated().sum())
+col1, col2 = st.columns(2)
 
-st.subheader("Missing Values")
+with col1:
+    fat_content_chart(filtered_df)
 
-st.dataframe(df.isnull().sum())
+with col2:
+    item_type_chart(filtered_df)
+
+col3, col4 = st.columns(2)
+
+with col3:
+    outlet_establishment_chart(filtered_df)
+
+with col4:
+    outlet_size_chart(filtered_df)
+
+col5, col6 = st.columns(2)
+
+with col5:
+    outlet_location_chart(filtered_df)
+
+with col6:
+    outlet_type_chart(filtered_df)
