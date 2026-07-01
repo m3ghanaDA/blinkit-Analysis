@@ -1,49 +1,144 @@
 import streamlit as st
+
 from utils.data_loader import load_data
-from utils.sidebar import sidebar_filters
-from utils.kpi import show_kpis
 from utils.preprocessing import preprocess_data
-from utils.charts import *
+
+from style.styles import load_css
+
+from components.header import show_header
+from components.sidebar import sidebar
+
+from utils.metrics import calculate_metrics
+
+from charts.fat_content import create_fat_content_chart
+from charts.fat_by_outlet import create_fat_by_outlet
+from charts.item_type import create_item_type_chart
+from charts.outlet_establishment import create_outlet_establishment_chart
+from charts.outlet_size import create_outlet_size_chart
+from charts.outlet_location import create_outlet_location_chart
+
+from components.outlet_table import outlet_summary
+
+
 
 st.set_page_config(
-    page_title="BlinkIT Analytics Dashboard",
-    page_icon="🛒",
-    layout="wide"
+    page_title="BlinkIt Analysis Dashboard",
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
-st.title("🛒 BlinkIT Analytics Dashboard")
+load_css()
 
-df = load_data()
-df = preprocess_data(df)
+df = preprocess_data(load_data())
 
-filtered_df = sidebar_filters(df)
+show_header()
 
-show_kpis(filtered_df)
+location, size, item = sidebar(df)
 
-st.divider()
+metrics = calculate_metrics(df)
+#metrics = calculate_metrics(filtered_df)
 
-#st.dataframe(filtered_df)
+st.markdown("<br>", unsafe_allow_html=True)
 
-col1, col2 = st.columns(2)
+# ---------- KPI ROW ----------
 
-with col1:
-    fat_content_chart(filtered_df)
+k1, k2, k3, k4 = st.columns(4)
 
-with col2:
-    item_type_chart(filtered_df)
+with k1:
+    st.metric(
+        label="💰 Total Sales",
+        value=f"${metrics['total_sales']/1_000_000:.2f}M"
+    )
 
-col3, col4 = st.columns(2)
+with k2:
+    st.metric(
+        label="📈 Average Sales",
+        value=f"${metrics['avg_sales']:.0f}"
+    )
 
-with col3:
-    outlet_establishment_chart(filtered_df)
+with k3:
+    st.metric(
+        label="📦 No. of Items",
+        value=f"{metrics['items']:}"
+    )
 
-with col4:
-    outlet_size_chart(filtered_df)
+with k4:
+    st.metric(
+        label="⭐ Average Rating",
+        value=f"{metrics['rating']:.1f}"
+    )
 
-col5, col6 = st.columns(2)
+#st.divider()
 
-with col5:
-    outlet_location_chart(filtered_df)
+st.markdown("<br>", unsafe_allow_html=True)
 
-with col6:
-    outlet_type_chart(filtered_df)
+
+row1_col1, row1_col2 = st.columns([1,2])
+
+with row1_col1:
+
+    with st.container(border=True):
+
+        st.plotly_chart(
+            create_fat_content_chart(df),
+            use_container_width=True,
+            config={"displayModeBar": False}
+        )
+
+with row1_col2:
+
+    with st.container(border=True):
+
+        st.plotly_chart(
+            create_fat_by_outlet(df),
+            use_container_width=True,
+            config={"displayModeBar": False}
+        )
+
+
+
+row2_col1, row2_col2 = st.columns([1,1])
+
+with row2_col1:
+    with st.container(border=True):
+        st.plotly_chart(
+            create_item_type_chart(df),
+            use_container_width=True,
+            config={"displayModeBar": False}
+        )
+
+with row2_col2:
+    with st.container(border=True):
+        st.plotly_chart(
+            create_outlet_establishment_chart(df),
+            use_container_width=True,
+            config={"displayModeBar": False}
+        )
+
+
+
+
+row3_col1, row3_col2 = st.columns(2)
+
+with row3_col1:
+    with st.container(border=True):
+        st.plotly_chart(
+            create_outlet_size_chart(df),
+            use_container_width=True,
+            config={"displayModeBar": False}
+        )
+
+with row3_col2:
+    with st.container(border=True):
+        st.plotly_chart(
+            create_outlet_location_chart(df),
+            use_container_width=True,
+            config={"displayModeBar": False}
+        )
+
+
+with st.container(border=True):
+
+    st.subheader("Outlet Type")
+
+    outlet_summary(df)
